@@ -23,10 +23,23 @@ public class ContactService : IContactService
             contactEntity.Id = IdGenerator.GenerateID();
 
             _contacts.Add(contactEntity);
-            _fileService.SaveContactToFile(_contacts);
             return true;
         }
         catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return false;
+        }
+    }
+
+    public bool SaveContact(ContactEntity contact)
+    {
+        try
+        {
+            _fileService.SaveContactToFile(_contacts);
+            return true;
+        }
+        catch (Exception ex) 
         {
             Debug.WriteLine(ex.Message);
             return false;

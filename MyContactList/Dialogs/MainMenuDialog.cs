@@ -1,8 +1,9 @@
-﻿using Business.Models;
+﻿using Business.Factories;
+using Business.Models;
 using Business.Services;
 
 namespace MyContactList.Dialogs;
-public class MainMenuDialog
+public class MainMenuDialog()
 {
     private readonly ContactService _contactService = new();
     public void MainMenu()
@@ -20,6 +21,7 @@ public class MainMenuDialog
             Console.WriteLine($"{"",-5}Q. Close Applicaton.");
             Console.WriteLine("----------------------------");
             MenuOptions();
+            Console.ReadKey();
         }
     }
 
@@ -51,8 +53,8 @@ public class MainMenuDialog
         foreach (var contacts in _contactService.GetContacs())
         {
             Console.WriteLine("----------- Contact ----------");
-            Console.WriteLine($"{"Name:",-5}{contacts.FullName}");
-            Console.WriteLine($"{"Name:",-5}{contacts.FullAdress}");
+            Console.WriteLine($"{"Name:",-5}{contacts.FirstName} {contacts.LastName}");
+            Console.WriteLine($"{"Name:",-5}{contacts.Adress} {contacts.PostalCode}");
             Console.WriteLine($"{"Name:",-5}{contacts.City}");
             Console.WriteLine($"{"Name:",-5}{contacts.Email}");
             Console.WriteLine($"{"Name:",-5}{contacts.Phone}");
@@ -64,8 +66,9 @@ public class MainMenuDialog
 
     public void NewContact()
     {
-        var contact = new ContactForm();
+        var contact = ContactFactory.Create();
         Console.Clear();
+        Console.WriteLine("--------- New Contact --------");
         Console.Write("Enter your first name: ");
         contact.FirstName = Console.ReadLine()!;
         Console.Write("Enter your last name: ");
@@ -89,7 +92,18 @@ public class MainMenuDialog
 
     public void QuitApp() 
     {
+        Console.Clear();
+        Console.WriteLine("Are you sure you want to quit?");
+        Console.WriteLine($"{"",-11}Y / N");
+        var quitAppAnswer = Console.ReadLine()!;
 
+        if (quitAppAnswer.ToLower() == "y")
+        {
+            Console.Clear();
+            Console.WriteLine("Goodbye!");
+            Console.ReadKey();
+            Environment.Exit(0);
+        }
     }
 
 }

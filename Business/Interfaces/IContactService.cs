@@ -5,4 +5,5 @@ public interface IContactService
 {
     bool CreateContact(ContactForm form);
     IEnumerable<ContactEntity> GetContacs();
+    bool SaveContact(ContactEntity contact);
 }
