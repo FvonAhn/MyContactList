@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35506.116 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyContactList", "MyContactList\MyContactList.csproj", "{D0B9004B-D26D-49D5-AEBD-3CBA1E74A768}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{EE01C8A6-8EE6-4966-86A4-80FB8EDC05BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D0B9004B-D26D-49D5-AEBD-3CBA1E74A768}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0B9004B-D26D-49D5-AEBD-3CBA1E74A768}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0B9004B-D26D-49D5-AEBD-3CBA1E74A768}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0B9004B-D26D-49D5-AEBD-3CBA1E74A768}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE01C8A6-8EE6-4966-86A4-80FB8EDC05BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE01C8A6-8EE6-4966-86A4-80FB8EDC05BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE01C8A6-8EE6-4966-86A4-80FB8EDC05BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE01C8A6-8EE6-4966-86A4-80FB8EDC05BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
