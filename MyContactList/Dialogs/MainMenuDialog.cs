@@ -5,7 +5,7 @@ using Business.Services;
 namespace MyContactList.Dialogs;
 public class MainMenuDialog()
 {
-    private readonly ContactService _contactService = new();
+    private readonly ContactService _contactService = new(new FileService());
     public void MainMenu()
     {
         Console.WriteLine("Welcome!");
@@ -49,17 +49,24 @@ public class MainMenuDialog()
     public void ShowContacts()
     {
         Console.Clear();
-;
-        foreach (var contacts in _contactService.GetContacs())
+
+        if (_contactService != null)
         {
-            Console.WriteLine("----------- Contact ----------");
-            Console.WriteLine($"{"Name:",-5}{contacts.FirstName} {contacts.LastName}");
-            Console.WriteLine($"{"Name:",-5}{contacts.Adress} {contacts.PostalCode}");
-            Console.WriteLine($"{"Name:",-5}{contacts.City}");
-            Console.WriteLine($"{"Name:",-5}{contacts.Email}");
-            Console.WriteLine($"{"Name:",-5}{contacts.Phone}");
-            Console.WriteLine("------------------------------");
-            Console.WriteLine("");
+            foreach (var contacts in _contactService.GetContacs())
+            {
+                Console.WriteLine("----------- Contact ----------");
+                Console.WriteLine($"{"Name:",-5}{contacts.FirstName} {contacts.LastName}");
+                Console.WriteLine($"{"Name:",-5}{contacts.Adress} {contacts.PostalCode}");
+                Console.WriteLine($"{"Name:",-5}{contacts.City}");
+                Console.WriteLine($"{"Name:",-5}{contacts.Email}");
+                Console.WriteLine($"{"Name:",-5}{contacts.Phone}");
+                Console.WriteLine("------------------------------");
+                Console.WriteLine("");
+            }
+        }
+        else 
+        {
+            Console.WriteLine("No contacts found!");
         }
         Console.ReadKey();
     }
@@ -83,10 +90,38 @@ public class MainMenuDialog()
         contact.Email = Console.ReadLine()!;
         Console.Write("Enter your phonenumber: ");
         contact.Phone = Console.ReadLine()!;
+
+        _contactService.CreateContact(contact);
     }
 
     public void SaveContact()
     {
+        if (_contactService.GetContacs().Count() == 0)
+        {
+            Console.Clear();
+            Console.WriteLine("No contacts found!");
+            Console.ReadKey();
+            return;
+        }
+        else
+        {
+            var contact = _contactService.GetContacs().Last();
+            Console.WriteLine($"{"Would you like to save contact:"} {contact.FirstName} {contact.LastName}{"?"}");
+            Console.WriteLine($"{"",-11}Y / N");
+            var answer = Console.ReadLine()!;
+
+            if (answer.ToLower() == "y")
+            {
+                _contactService.SaveContact(contact);
+                Console.WriteLine("Contact saved!");
+                Console.ReadKey();
+            }
+            else 
+            {
+                Console.WriteLine("Contact not saved!");
+                Console.ReadKey();
+            }
+        }
 
     }
 

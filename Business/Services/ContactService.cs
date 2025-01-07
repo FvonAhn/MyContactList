@@ -7,7 +7,7 @@ using System.Diagnostics;
 namespace Business.Services;
 public class ContactService : IContactService
 {
-    public List<ContactEntity> _contacts = [];
+    public List<ContactEntity> _contacts = new List<ContactEntity>();
     private readonly FileService _fileService;
 
     public ContactService(FileService fileService)
