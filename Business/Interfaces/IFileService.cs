@@ -3,6 +3,6 @@
 namespace Business.Interfaces;
 public interface IFileService
 {
-    List<ContactEntity> GetContactsFromFile();
-    bool SaveContactToFile(List<ContactEntity> contact);
+    string GetContactsFromFile();
+    bool SaveContactToFile(string contact);
 }

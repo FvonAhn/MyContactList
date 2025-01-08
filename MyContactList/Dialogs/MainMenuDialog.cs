@@ -1,11 +1,11 @@
 ﻿using Business.Factories;
-using Business.Models;
+using Business.Interfaces;
 using Business.Services;
 
 namespace MyContactList.Dialogs;
-public class MainMenuDialog()
+public class MainMenuDialog(IContactService contactService)
 {
-    private readonly ContactService _contactService = new(new FileService());
+    private readonly IContactService _contactService = contactService;
     public void MainMenu()
     {
         Console.WriteLine("Welcome!");
@@ -20,32 +20,28 @@ public class MainMenuDialog()
             Console.WriteLine($"{"",-5}3. Save New Contact To File.");
             Console.WriteLine($"{"",-5}Q. Close Applicaton.");
             Console.WriteLine("----------------------------");
-            MenuOptions();
+            string answer = Console.ReadLine()!;
+            switch (answer.ToLower())
+            {
+                case "1":
+                    ShowContacts();
+                    break;
+                case "2":
+                    NewContact();
+                    break;
+                //case "3":
+                //    SaveContact();
+                //    break;
+                case "q":
+                    QuitApp();
+                    break;
+                default:
+                    break;
+            }
             Console.ReadKey();
         }
     }
 
-    public void MenuOptions()
-    {
-        string answer = Console.ReadLine()!;
-        switch (answer.ToLower())
-        {
-            case "1":
-                ShowContacts();
-                break;
-            case "2":
-                NewContact();
-                break;
-            case "3":
-                SaveContact();
-                break;
-            case "q":
-                QuitApp();
-                break;
-            default:
-                break;
-        }
-    }
     public void ShowContacts()
     {
         Console.Clear();
@@ -74,6 +70,7 @@ public class MainMenuDialog()
     public void NewContact()
     {
         var contact = ContactFactory.Create();
+
         Console.Clear();
         Console.WriteLine("--------- New Contact --------");
         Console.Write("Enter your first name: ");
@@ -91,39 +88,29 @@ public class MainMenuDialog()
         Console.Write("Enter your phonenumber: ");
         contact.Phone = Console.ReadLine()!;
 
-        _contactService.CreateContact(contact);
-    }
-
-    public void SaveContact()
-    {
-        if (_contactService.GetContacs().Count() == 0)
+        var addContact = _contactService.CreateContact(contact);
+        if (addContact)
         {
             Console.Clear();
-            Console.WriteLine("No contacts found!");
+            Console.WriteLine("Contact Added.");
             Console.ReadKey();
-            return;
+            Console.Clear();
+            Console.WriteLine("If you want to keep the new contact \nyou need to save it to file."); 
+            Console.ReadKey();
         }
         else
         {
-            var contact = _contactService.GetContacs().Last();
-            Console.WriteLine($"{"Would you like to save contact:"} {contact.FirstName} {contact.LastName}{"?"}");
-            Console.WriteLine($"{"",-11}Y / N");
-            var answer = Console.ReadLine()!;
-
-            if (answer.ToLower() == "y")
-            {
-                _contactService.SaveContact(contact);
-                Console.WriteLine("Contact saved!");
-                Console.ReadKey();
-            }
-            else 
-            {
-                Console.WriteLine("Contact not saved!");
-                Console.ReadKey();
-            }
+            Console.WriteLine("Failed adding contact");
         }
-
     }
+
+    //public void SaveContact()
+    //{
+    //    var contact = _contactService.GetContacs().Last();
+    //    Console.WriteLine($"{"Would you like to save contact:"} {contact.FirstName} {contact.LastName}{"?"}");
+    //    Console.WriteLine($"{"",-11}Y / N");
+    //    var answer = Console.ReadLine()!;
+    //}
 
     public void QuitApp() 
     {

@@ -8,50 +8,48 @@ public class FileService : IFileService
 {
     private readonly string _directoryPath;
     private readonly string _filePath;
-    private readonly JsonSerializerOptions _jsonSerializerOptions;
 
-    public FileService(string directoryPath = "Data", string filePath = "contacts.json")
+    public FileService(string directoryPath = "Data", string fileName = "contacts.json")
     {
         _directoryPath = directoryPath;
-        _filePath = Path.Combine(_directoryPath, filePath);
-        _jsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true };
+        _filePath = Path.Combine(_directoryPath, fileName);
     }
 
 
-    public bool SaveContactToFile(List<ContactEntity> contact)
+    public bool SaveContactToFile(string contact)
     {
         try
         {
             if (!Directory.Exists(_directoryPath))
+            {
                 Directory.CreateDirectory(_directoryPath);
+            }
 
-            var json = JsonSerializer.Serialize(contact, _jsonSerializerOptions);
-            File.WriteAllText(_filePath, json);
+            File.WriteAllText(_filePath, contact);
             return true;
         }
-        catch (Exception ex)
+        catch
         {
-            Debug.WriteLine(ex.Message);
             return false;
         }
     }
 
-    public List<ContactEntity> GetContactsFromFile()
+    public string GetContactsFromFile()
     {
         try
         {
             if (!File.Exists(_filePath))
-                return [];
-
-            var json = File.ReadAllText(_filePath);
-            var list = JsonSerializer.Deserialize<List<ContactEntity>>(json, _jsonSerializerOptions);
-            return list ?? [];
+            {
+                return File.ReadAllText(_filePath);
+            }
         }
-        catch (Exception ex)
+        catch
         {
-            Debug.WriteLine(ex.Message);
-            return [];
+            Console.Clear();
+            Console.WriteLine("No Contacts available.");
+            Console.ReadKey();
         }
+        return null!;
 
     }
 }

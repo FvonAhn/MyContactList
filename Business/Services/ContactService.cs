@@ -2,53 +2,50 @@
 using Business.Helpers;
 using Business.Models;
 using Business.Interfaces;
-using System.Diagnostics;
+using System.Text.Json;
 
 namespace Business.Services;
-public class ContactService : IContactService
+public class ContactService(IFileService fileService) : IContactService
 {
-    public List<ContactEntity> _contacts = new List<ContactEntity>();
-    private readonly FileService _fileService;
-
-    public ContactService(FileService fileService)
-    {
-        _fileService = fileService;
-    }
+    private readonly IFileService _fileService = fileService;
+    public List<ContactEntity> _contacts = [];
 
     public bool CreateContact(ContactForm form)
     {
         try
         {
-            ContactEntity contactEntity = ContactFactory.Create(form)!;
+            var contactEntity  = ContactFactory.Create(form);
             contactEntity.Id = IdGenerator.GenerateID();
-
             _contacts.Add(contactEntity);
-            return true;
+
+            var json = JsonSerializer.Serialize(_contacts);
+            var contactCreated = _fileService.SaveContactToFile(json);
+            return contactCreated;
         }
-        catch (Exception ex)
+        catch 
         {
-            Debug.WriteLine(ex.Message);
             return false;
         }
     }
 
-    public bool SaveContact(ContactEntity contact)
-    {
-        try
-        {
-            _fileService.SaveContactToFile(_contacts);
-            return true;
-        }
-        catch (Exception ex) 
-        {
-            Debug.WriteLine(ex.Message);
-            return false;
-        }
-    }
+    //public bool SaveContact(ContactEntity contact)
+    //{
+    //    var json = JsonSerializer.Serialize(_contacts);
+    //    var contactCreated = _fileService.SaveContactToFile(json);
+    //    return contactCreated;
+    //}
 
     public IEnumerable<ContactEntity> GetContacs()
     {
-        _contacts = _fileService.GetContactsFromFile();
+        var contact = _fileService.GetContactsFromFile();
+        try
+        {
+            _contacts = JsonSerializer.Deserialize<List<ContactEntity>>(contact)!;
+        }
+        catch 
+        {
+            _contacts = [];
+        }
         return _contacts;
     }
 }
