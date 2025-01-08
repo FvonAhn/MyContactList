@@ -1,4 +1,5 @@
-﻿using Business.Models;
+﻿using Business.Helpers;
+using Business.Models;
 using System.Diagnostics;
 
 namespace Business.Factories;
@@ -8,13 +9,14 @@ public static class ContactFactory
     {
         return new ContactForm();
     }
-
-    public static ContactEntity? Create(ContactForm form)
+    
+    public static Contact? Create(ContactForm form)
     {
         try
         {
-            return new ContactEntity
+            return new Contact
             {
+                Id = IdGenerator.GenerateID(),
                 FirstName = form.FirstName,
                 LastName = form.LastName,
                 Adress = form.Adress,
@@ -22,25 +24,6 @@ public static class ContactFactory
                 City = form.City,
                 Email = form.Email,
                 Phone = form.Phone,
-            };
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"Error Creating ContactEntity: {ex.Message}");
-            return null;
-        }
-    }
-    
-    public static Contact? Create(ContactEntity entity)
-    {
-        try
-        {
-            return new Contact
-            {
-                FullName = $"{entity.FirstName} {entity.LastName}",
-                FullAddress = $"{entity.Adress} {entity.PostalCode} {entity.City}",
-                Email = entity.Email,
-                Phone = entity.Phone,
             };
         }
         catch (Exception ex) 

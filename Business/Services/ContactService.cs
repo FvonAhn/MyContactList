@@ -8,15 +8,14 @@ namespace Business.Services;
 public class ContactService(IFileService fileService) : IContactService
 {
     private readonly IFileService _fileService = fileService;
-    public List<ContactEntity> _contacts = [];
+    public List<Contact> _contacts = [];
 
     public bool CreateContact(ContactForm form)
     {
         try
         {
-            var contactEntity  = ContactFactory.Create(form);
-            contactEntity.Id = IdGenerator.GenerateID();
-            _contacts.Add(contactEntity);
+            var contact  = ContactFactory.Create(form);
+            _contacts.Add(contact);
 
             var json = JsonSerializer.Serialize(_contacts);
             var contactCreated = _fileService.SaveContactToFile(json);
@@ -35,12 +34,12 @@ public class ContactService(IFileService fileService) : IContactService
     //    return contactCreated;
     //}
 
-    public IEnumerable<ContactEntity> GetContacs()
+    public IEnumerable<Contact> GetContacs()
     {
         var contact = _fileService.GetContactsFromFile();
         try
         {
-            _contacts = JsonSerializer.Deserialize<List<ContactEntity>>(contact)!;
+            _contacts = JsonSerializer.Deserialize<List<Contact>>(contact)!;
         }
         catch 
         {
