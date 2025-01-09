@@ -27,9 +27,6 @@ public class MainMenuDialog(IContactService contactService)
                 case "2":
                     NewContact();
                     break;
-                //case "3":
-                //    SaveContact();
-                //    break;
                 case "q":
                     QuitApp();
                     break;
