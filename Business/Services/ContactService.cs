@@ -9,29 +9,15 @@ public class ContactService(IFileService fileService) : IContactService
     private readonly IFileService _fileService = fileService;
     private List<Contact> _contacts = [];
 
-    public bool CreateContact(ContactForm form)
+    public bool SaveContact(ContactForm form)
     {
-        try
-        {
             var contact  = ContactFactory.Create(form);
             _contacts.Add(contact);
 
             var json = JsonSerializer.Serialize(_contacts);
             var contactCreated = _fileService.SaveContactToFile(json);
             return contactCreated;
-        }
-        catch 
-        {
-            return false;
-        }
     }
-
-    //public bool SaveContact(ContactEntity contact)
-    //{
-    //    var json = JsonSerializer.Serialize(_contacts);
-    //    var contactCreated = _fileService.SaveContactToFile(json);
-    //    return contactCreated;
-    //}
 
     public IEnumerable<Contact> GetContacs()
     {

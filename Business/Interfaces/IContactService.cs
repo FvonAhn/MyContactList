@@ -3,6 +3,6 @@
 namespace Business.Interfaces;
 public interface IContactService
 {
-    bool CreateContact(ContactForm form);
+    bool SaveContact(ContactForm form);
     IEnumerable<Contact> GetContacs();
 }

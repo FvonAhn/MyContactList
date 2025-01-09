@@ -33,12 +33,17 @@ public class FileService : IFileService
 
     public string GetContactsFromFile()
     {
-
-            if (!File.Exists(_filePath))
+        try
+        {
+            if (File.Exists(_filePath))
             {
                 return File.ReadAllText(_filePath);
             }
- 
+        }
+        catch
+        {
+            Console.WriteLine("No Contacts Available.");
+        }
         return null!;
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MyContactList.Dialogs;
 
 var serviceCollection = new ServiceCollection();
-serviceCollection.AddSingleton<IFileService>(new FileService("contact.json"));
+serviceCollection.AddSingleton<IFileService>(new FileService("contacts.json"));
 serviceCollection.AddSingleton<IContactService, ContactService>();
 serviceCollection.AddSingleton<MainMenuDialog>();
 

@@ -44,50 +44,53 @@ public class MainMenuDialog(IContactService contactService)
     {
         Console.Clear();
 
-            foreach (var contacts in _contactService.GetContacs())
-            {
-                Console.WriteLine("----------- Contact ----------");
-                Console.WriteLine($"{"Name:",-5}{contacts.FirstName} {contacts.LastName}");
-                Console.WriteLine($"{"Name:",-5}{contacts.Adress} {contacts.PostalCode}");
-                Console.WriteLine($"{"Name:",-5}{contacts.City}");
-                Console.WriteLine($"{"Name:",-5}{contacts.Email}");
-                Console.WriteLine($"{"Name:",-5}{contacts.Phone}");
-                Console.WriteLine("------------------------------");
-                Console.WriteLine("");
-            }
+        var contacts = _contactService.GetContacs();
+
+        foreach (var contact in contacts)
+        {
+            Console.WriteLine("----------- Contact ----------");
+            Console.WriteLine($"{"Name:",-5}{contact.FirstName} {contact.LastName}");
+            Console.WriteLine($"{"Name:",-5}{contact.Adress} {contact.PostalCode}");
+            Console.WriteLine($"{"Name:",-5}{contact.City}");
+            Console.WriteLine($"{"Name:",-5}{contact.Email}");
+            Console.WriteLine($"{"Name:",-5}{contact.Phone}");
+            Console.WriteLine("------------------------------");
+            Console.WriteLine("");
+        }
 
         Console.ReadKey();
     }
 
     public void NewContact()
     {
-        var contact = ContactFactory.Create();
+        var form = ContactFactory.Create();
 
         Console.Clear();
         Console.WriteLine("--------- New Contact --------");
         Console.Write("Enter your first name: ");
-        contact.FirstName = Console.ReadLine()!;
+        form.FirstName = Console.ReadLine()!;
         Console.Write("Enter your last name: ");
-        contact.LastName = Console.ReadLine()!;
+        form.LastName = Console.ReadLine()!;
         Console.Write("Enter your adress: ");
-        contact.Adress = Console.ReadLine()!;
+        form.Adress = Console.ReadLine()!;
         Console.Write("Enter the postal code: ");
-        contact.PostalCode = Console.ReadLine()!;
+        form.PostalCode = Console.ReadLine()!;
         Console.Write("Enter what city: ");
-        contact.City = Console.ReadLine()!;
+        form.City = Console.ReadLine()!;
         Console.Write("Enter your email: ");
-        contact.Email = Console.ReadLine()!;
+        form.Email = Console.ReadLine()!;
         Console.Write("Enter your phonenumber: ");
-        contact.Phone = Console.ReadLine()!;
+        form.Phone = Console.ReadLine()!;
 
-        var addContact = _contactService.CreateContact(contact);
+        var addContact = _contactService.SaveContact(form);
         if (addContact)
-        {
+        { 
             Console.Clear();
             Console.WriteLine("Contact added succesfully.");
         }
         else
         {
+            Console.Clear();
             Console.WriteLine("Failed adding contact.");
         }
     }
