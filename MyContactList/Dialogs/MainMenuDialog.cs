@@ -46,11 +46,10 @@ public class MainMenuDialog(IContactService contactService)
         foreach (var contact in contacts)
         {
             Console.WriteLine("----------- Contact ----------");
-            Console.WriteLine($"{"Name:",-5}{contact.FirstName} {contact.LastName}");
-            Console.WriteLine($"{"Name:",-5}{contact.Adress} {contact.PostalCode}");
-            Console.WriteLine($"{"Name:",-5}{contact.City}");
-            Console.WriteLine($"{"Name:",-5}{contact.Email}");
-            Console.WriteLine($"{"Name:",-5}{contact.Phone}");
+            Console.WriteLine($"{"Name:",-8}{contact.FirstName} {contact.LastName}");
+            Console.WriteLine($"{"Adress:",-8}{contact.Adress} {contact.PostalCode} {contact.City}");
+            Console.WriteLine($"{"Email:",-8}{contact.Email}");
+            Console.WriteLine($"{"Phone:",-8}{contact.Phone}");
             Console.WriteLine("------------------------------");
             Console.WriteLine("");
         }
