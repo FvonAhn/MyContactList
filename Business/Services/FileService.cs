@@ -1,7 +1,4 @@
 ﻿using Business.Interfaces;
-using Business.Models;
-using System.Diagnostics;
-using System.Text.Json;
 
 namespace Business.Services;
 public class FileService : IFileService
@@ -9,9 +6,9 @@ public class FileService : IFileService
     private readonly string _directoryPath;
     private readonly string _filePath;
 
-    public FileService(string directoryPath = "Data", string fileName = "contacts.json")
+    public FileService(string fileName)
     {
-        _directoryPath = directoryPath;
+        _directoryPath = "Data";
         _filePath = Path.Combine(_directoryPath, fileName);
     }
 
@@ -36,20 +33,12 @@ public class FileService : IFileService
 
     public string GetContactsFromFile()
     {
-        try
-        {
+
             if (!File.Exists(_filePath))
             {
                 return File.ReadAllText(_filePath);
             }
-        }
-        catch
-        {
-            Console.Clear();
-            Console.WriteLine("No Contacts available.");
-            Console.ReadKey();
-        }
+ 
         return null!;
-
     }
 }

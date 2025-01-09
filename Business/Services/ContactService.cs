@@ -1,5 +1,4 @@
 ﻿using Business.Factories;
-using Business.Helpers;
 using Business.Models;
 using Business.Interfaces;
 using System.Text.Json;
@@ -8,7 +7,7 @@ namespace Business.Services;
 public class ContactService(IFileService fileService) : IContactService
 {
     private readonly IFileService _fileService = fileService;
-    public List<Contact> _contacts = [];
+    private List<Contact> _contacts = [];
 
     public bool CreateContact(ContactForm form)
     {

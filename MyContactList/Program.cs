@@ -1,19 +1,14 @@
 ﻿using Business.Interfaces;
 using Business.Services;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using MyContactList.Dialogs;
 
+var serviceCollection = new ServiceCollection();
+serviceCollection.AddSingleton<IFileService>(new FileService("contact.json"));
+serviceCollection.AddSingleton<IContactService, ContactService>();
+serviceCollection.AddSingleton<MainMenuDialog>();
 
-var builder = Host.CreateDefaultBuilder().ConfigureServices(services => 
-{
-    services.AddSingleton<IContactService, ContactService>();
-    services.AddSingleton<IFileService, FileService>();
-    services.AddSingleton<MainMenuDialog>();
-}).Build();
+var service = serviceCollection.BuildServiceProvider();
+var mainMenuDialogs = service.GetRequiredService<MainMenuDialog>();
 
-builder.Start();
-Console.Clear();
-
-var menu = builder.Services.GetRequiredService<MainMenuDialog>();
-menu.MainMenu();
+mainMenuDialogs.MainMenu();

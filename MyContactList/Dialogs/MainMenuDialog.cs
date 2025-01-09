@@ -1,6 +1,5 @@
 ﻿using Business.Factories;
 using Business.Interfaces;
-using Business.Services;
 
 namespace MyContactList.Dialogs;
 public class MainMenuDialog(IContactService contactService)
@@ -17,7 +16,6 @@ public class MainMenuDialog(IContactService contactService)
             Console.WriteLine("----------- Menu -----------");
             Console.WriteLine($"{"",-5}1. Show All Contacts.");
             Console.WriteLine($"{"",-5}2. New Contact.");
-            Console.WriteLine($"{"",-5}3. Save New Contact To File.");
             Console.WriteLine($"{"",-5}Q. Close Applicaton.");
             Console.WriteLine("----------------------------");
             string answer = Console.ReadLine()!;
@@ -46,8 +44,6 @@ public class MainMenuDialog(IContactService contactService)
     {
         Console.Clear();
 
-        if (_contactService != null)
-        {
             foreach (var contacts in _contactService.GetContacs())
             {
                 Console.WriteLine("----------- Contact ----------");
@@ -59,11 +55,7 @@ public class MainMenuDialog(IContactService contactService)
                 Console.WriteLine("------------------------------");
                 Console.WriteLine("");
             }
-        }
-        else 
-        {
-            Console.WriteLine("No contacts found!");
-        }
+
         Console.ReadKey();
     }
 
@@ -92,25 +84,13 @@ public class MainMenuDialog(IContactService contactService)
         if (addContact)
         {
             Console.Clear();
-            Console.WriteLine("Contact Added.");
-            Console.ReadKey();
-            Console.Clear();
-            Console.WriteLine("If you want to keep the new contact \nyou need to save it to file."); 
-            Console.ReadKey();
+            Console.WriteLine("Contact added succesfully.");
         }
         else
         {
-            Console.WriteLine("Failed adding contact");
+            Console.WriteLine("Failed adding contact.");
         }
     }
-
-    //public void SaveContact()
-    //{
-    //    var contact = _contactService.GetContacs().Last();
-    //    Console.WriteLine($"{"Would you like to save contact:"} {contact.FirstName} {contact.LastName}{"?"}");
-    //    Console.WriteLine($"{"",-11}Y / N");
-    //    var answer = Console.ReadLine()!;
-    //}
 
     public void QuitApp() 
     {
