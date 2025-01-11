@@ -31,6 +31,7 @@ public class MainMenuDialog(IContactService contactService)
                     QuitApp();
                     break;
                 default:
+                    Console.WriteLine("Option invalid. You must choose between 1-2 or Q.");
                     break;
             }
             Console.ReadKey();
