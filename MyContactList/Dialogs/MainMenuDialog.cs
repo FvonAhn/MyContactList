@@ -63,31 +63,31 @@ public class MainMenuDialog(IContactService contactService)
 
         Console.Clear();
         Console.WriteLine("--------- New Contact --------");
-        Console.Write("Enter your first name: ");
+        Console.Write("Enter contact first name: ");
         form.FirstName = Console.ReadLine()!;
-        Console.Write("Enter your last name: ");
+        Console.Write("Enter contact last name: ");
         form.LastName = Console.ReadLine()!;
-        Console.Write("Enter your adress: ");
+        Console.Write("Enter contact adress: ");
         form.Adress = Console.ReadLine()!;
-        Console.Write("Enter the postal code: ");
+        Console.Write("Enter contact postal code: ");
         form.PostalCode = Console.ReadLine()!;
-        Console.Write("Enter what city: ");
+        Console.Write("Enter contact city: ");
         form.City = Console.ReadLine()!;
-        Console.Write("Enter your email: ");
+        Console.Write("Enter contact email: ");
         form.Email = Console.ReadLine()!;
-        Console.Write("Enter your phonenumber: ");
+        Console.Write("Enter contact phonenumber: ");
         form.Phone = Console.ReadLine()!;
 
         var addContact = _contactService.SaveContact(form);
         if (addContact)
         { 
             Console.Clear();
-            Console.WriteLine("Contact added succesfully.");
+            Console.WriteLine("Contact added: SUCCESFUL.");
         }
         else
         {
             Console.Clear();
-            Console.WriteLine("Failed adding contact.");
+            Console.WriteLine("Contact added: FAILED.");
         }
     }
 
